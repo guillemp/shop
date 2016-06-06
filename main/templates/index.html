@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+
+{{ u }}
+
+<table class="table table-bordered">
+<tr>
+    <th>#</th>
+    <th>Code</th>
+    <th>Description</th>
+    <th>Price</th>
+    <th>Stock</th>
+    <th>Action</th>
+</tr>
+{% for product in products %}
+    <tr>
+        <td>{{ product.id }}</td>
+        <td>{{ product.code }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.price }} &euro;</td>
+        <td>{{ product.stock }}</td>
+        <td><a href="#" class="cart-add" data-product="{{ product.id }}">Add to cart</a></td>
+    </tr>
+{% endfor %}
+</table>
+
+
+{% endblock %}
