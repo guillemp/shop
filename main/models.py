@@ -27,16 +27,22 @@ class Country(models.Model):
     iso_code_2 = models.CharField(max_length=2)
     iso_code_3 = models.CharField(max_length=3)
 
+class Region(models.Model):
+    name = models.CharField(max_length=128)
+    country = models.ForeignKey(Country)
+
 class Address(models.Model):
     customer = models.ForeignKey(Customer)
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
-    company = models.CharField(max_length=64)
+    company = models.CharField(max_length=64, null=True, blank=True)
+    phone = models.CharField(max_length=32, null=True, blank=True)
     address_1 = models.CharField(max_length=128)
-    address_2 = models.CharField(max_length=128)
+    address_2 = models.CharField(max_length=128, null=True, blank=True)
     city = models.CharField(max_length=128)
-    postcode = models.CharField(max_length=16)
+    zipcode = models.CharField(max_length=16)
     country = models.ForeignKey(Country)
+    region = models.ForeignKey(Region)
 
 class Cart(models.Model):
     customer = models.ForeignKey(Customer, null=True, blank=True)

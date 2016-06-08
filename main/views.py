@@ -45,12 +45,12 @@ def checkout_view(request):
 #
 
 def admin_view(request):
-    return render(request, 'admin/admin_index.html', {})
+    return render(request, 'admin/index.html', {})
 
 def admin_products(request):
     products = models.Product.objects.all()
 
-    return render(request, 'admin/admin_products.html', {
+    return render(request, 'admin/products.html', {
         "products": products
     })
 
@@ -69,9 +69,9 @@ def admin_products_add(request):
 
         return redirect('/admin/products/')
 
-    return render(request, 'admin/admin_products_add.html', {})
+    return render(request, 'admin/products_add.html', {})
 
 def admin_products_edit(request, product_id):
-    return render(request, 'admin/admin_products_edit.html', {
+    return render(request, 'admin/products_edit.html', {
         "product": product_id
     })
