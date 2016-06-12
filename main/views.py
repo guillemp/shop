@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib import messages
 from main import models
+import random, string
 
 def index_view(request):
     products = models.Product.objects.all()
@@ -40,20 +44,35 @@ def checkout_view(request):
         "products": products
     })
 
-#
-# ADMIN VIEWS
-#
 
+###############################################################################
+# ADMIN VIEWS
+###############################################################################
+
+
+def order_id_generator(size=8, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for x in range(size))
+
+def generate_code(request, responde=False):
+    return HttpResponse(order_id_generator())
+
+
+
+@login_required
 def admin_view(request):
     return render(request, 'admin/index.html', {})
 
+
+@login_required
 def admin_products(request):
-    products = models.Product.objects.all()
+    products = models.Product.objects.all().order_by('-id')
 
     return render(request, 'admin/products.html', {
         "products": products
     })
 
+
+@login_required
 def admin_products_add(request):
     if request.POST:
         code = request.POST.get('code', '')
@@ -67,11 +86,29 @@ def admin_products_add(request):
         product.price = price
         product.save()
 
-        return redirect('/admin/products/')
+        messages.success(request, 'New product created.')
+        return redirect('/admin/products/add/')
 
-    return render(request, 'admin/products_add.html', {})
+    return render(request, 'admin/products_add.html', {
+        'code': order_id_generator()
+    })
 
+@login_required
 def admin_products_edit(request, product_id):
+    try:
+        product = models.Product.objects.get(pk=product_id)
+    except models.Product.DoesNotExist:
+        raise Http404
+
+    if request.POST:
+        product.code = request.POST.get('code', '')
+        product.description = request.POST.get('description', '')
+        product.price = request.POST.get('price', 0)
+        product.save()
+
+        messages.success(request, 'Product saved.')
+        return redirect('/admin/products/edit/{}'.format(product.id))
+
     return render(request, 'admin/products_edit.html', {
-        "product": product_id
+        "product": product
     })

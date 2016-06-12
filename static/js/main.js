@@ -3,6 +3,9 @@ var csrftoken = getCookie('csrftoken');
 
 $(function() {
 
+    // add tooltips
+    $('[data-toggle="tooltip"]').tooltip();
+
     // add to cart
     $('.cart-add').click(function() {
         var data = {

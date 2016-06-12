@@ -11,4 +11,7 @@ urlpatterns = [
     url(r'^admin/products/$', views.admin_products, name='admin_products'),
     url(r'^admin/products/add/$', views.admin_products_add, name='admin_products_add'),
     url(r'^admin/products/edit/(?P<product_id>[0-9]+)/$', views.admin_products_edit, name='admin_products_edit'),
+    url(r'^admin/products/generate_code/$', views.generate_code, name='generate_code'),
+
+    url('^accounts/', include('django.contrib.auth.urls'))
 ]

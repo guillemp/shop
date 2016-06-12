@@ -16,7 +16,8 @@
     
 </div>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
+<thead>
 <tr>
     <th>#</th>
     <th>Code</th>
@@ -25,18 +26,27 @@
     <th>Stock</th>
     <th>Action</th>
 </tr>
+</thead>
+<tbody>
 {% for product in products %}
     <tr>
         <td>{{ product.id }}</td>
         <td>{{ product.code }}</td>
         <td>{{ product.description }}</td>
-        <td>{{ product.price }} &euro;</td>
-        <td>{{ product.stock }}</td>
-        <td><a href="/admin/products/edit/{{ product.id }}" class="btn btn-default btn-xs">
-            <span class="glyphicon glyphicon-pencil"></span>
-        </a></td>
+        <td class="text-right">{{ product.price }} &euro;</td>
+        <td class="text-right">{{ product.stock }}</td>
+        <td class="text-center">
+            <a href="/admin/products/edit/{{ product.id }}" data-toggle="tooltip" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
+            &nbsp;
+            <a href="#" data-product="{{ product.id }}" data-toggle="tooltip" title="Duplicate"><span class="glyphicon glyphicon-duplicate"></span></a>
+            &nbsp;
+            <a href="#" data-product="{{ product.id }}" data-toggle="tooltip" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+            &nbsp;
+            <a href="/products/{{ product.id }}" data-toggle="tooltip" title="Link" target="_blank"><span class="glyphicon glyphicon-link"></span></a>
+        </td>
     </tr>
 {% endfor %}
+</tbody>
 </table>
 
 
