@@ -4,8 +4,11 @@ from main import views
 
 urlpatterns = [
     url(r'^$', views.index_view, name='index_view'),
+
     url(r'^cart/$', views.cart_view, name='cart_view'),
     url(r'^cart/add/$', views.cart_add, name='cart_add'),
+    url(r'^cart/remove/$', views.cart_remove, name='cart_remove'),
+
     url(r'^checkout/$', views.checkout_view, name='checkout_view'),
     url(r'^admin/$', views.admin_view, name='admin_view'),
     url(r'^admin/products/$', views.admin_products, name='admin_products'),

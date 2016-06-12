@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -30,7 +30,13 @@ def cart_add(request):
         product_id = request.POST.get('product_id', 0)
         item = models.Cart.create_or_update(request, product_id)
         return HttpResponse("ok")
+    return HttpResponse("error")
 
+def cart_remove(request):
+    if request.POST:
+        product_id = request.POST.get('product_id', 0)
+        item = get_object_or_404(models.Cart, product_id=product_id).delete()
+        return HttpResponse("ok")
     return HttpResponse("error")
 
 

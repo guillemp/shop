@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load utils %}
 {% block title %}Home{% endblock %}
 {% block content %}
 
@@ -21,7 +22,12 @@
         <td>{{ product.description }}</td>
         <td>{{ product.price }} &euro;</td>
         <td>{{ product.stock }}</td>
-        <td><a href="#" class="cart-add" data-product="{{ product.id }}">Add to cart</a></td>
+        <td>
+            {% cart_contains request product.id as cart_contains_product %}
+            {% if not cart_contains_product %}
+            <a href="#" class="cart-add" data-product="{{ product.id }}">Add to cart</a>
+            {% endif %}
+        </td>
     </tr>
 {% endfor %}
 </table>

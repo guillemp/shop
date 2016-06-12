@@ -1,1 +1,3 @@
-body { padding-top: 70px; }
+
+body#main_template { padding-top: 20px; }
+body#admin_template { padding-top: 70px; }

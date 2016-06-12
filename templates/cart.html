@@ -12,6 +12,7 @@
     <th>Description</th>
     <th>Price</th>
     <th>Quantity</th>
+    <th>Action</th>
 </tr>
 {% for item in items %}
     <tr>
@@ -20,6 +21,7 @@
         <td>{{ item.product.description }}</td>
         <td>{{ item.product.price }} &euro;</td>
         <td>{{ item.quantity }}</td>
+        <td><a href="#" class="cart-remove" data-product="{{ item.product.id }}">remove</a></td>
     </tr>
 {% endfor %}
 </table>
